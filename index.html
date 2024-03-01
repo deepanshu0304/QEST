@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/1bdaf4d0bb.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="navbar">
+        <div class="navbar-filters">
+          <div class="input-box search-bar">
+            <img
+              class="search-icon"
+              src="/search.svg"
+              width="20px"
+              height="20px"
+            />
+            <input class="input search" type="text" placeholder="Search..." />
+          </div>
+
+          <div class="filter-container">
+            <div class="input-box status-bar">
+              <img
+                class="status-icon"
+                src="/status.svg"
+                height="17px"
+                width="17px"
+              />
+
+              <div class="select-btn status-select-btn">
+                <span class="sBtn-text status-btn-text">Status</span>
+                <i class="fa-solid fa-angle-down"></i>
+              </div>
+            </div>
+            <div class="drop-down status-drop-down htaado">
+              <ul class="options status-options">
+                <li class="option status-option">
+                  <span class="option-text">Delivered</span>
+                </li>
+                <li class="option status-option">
+                  <span class="option-text">In transit</span>
+                </li>
+                <li class="option status-option">
+                  <span class="option-text">Placed</span>
+                </li>
+                <li class="option status-option">
+                  <span class="option-text">Out for Delivery</span>
+                </li>
+                <li class="option status-option">
+                  <span class="option-text">Status</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="filter-container">
+            <div class="input-box distribution-bar">
+              <img
+                class="distribution-icon"
+                src="/location.svg"
+                width="17px"
+                height="17px"
+              />
+              <div class="select-btn distribution-select-btn">
+                <span class="sBtn-text distribution-btn-text"
+                  >Distribution</span
+                >
+                <i class="fa-solid fa-angle-down"></i>
+              </div>
+            </div>
+            <div class="drop-down distribution-drop-down htaado">
+              <ul class="options distribution-options">
+                <li class="option distribution-option">
+                  <span class="option-text">Patna</span>
+                </li>
+                <li class="option distribution-option">
+                  <span class="option-text">Banglore</span>
+                </li>
+                <li class="option distribution-option">
+                  <span class="option-text">Hyderabad</span>
+                </li>
+                <li class="option distribution-option">
+                  <span class="option-text">Delhi</span>
+                </li>
+                <li class="option distribution-option">
+                  <span class="option-text">Distribution</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="orders">
+          <img
+            class="order-icon"
+            src="/download.svg"
+            width="20px"
+            height="20px"
+          />
+          <button class="order-btn">Export Orders</button>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="all-orders">
+          <input type="checkbox" id="select-all" name="deepanshug" />
+
+          <label for="all"> All orders</label>
+        </div>
+      </div>
+    </div>
+
+    <script src="/script.js"></script>
+  </body>
+</html>
