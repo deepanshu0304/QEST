@@ -45,7 +45,7 @@
                 <i class="fa-solid fa-angle-down"></i>
               </div>
             </div>
-            <div class="drop-down status-drop-down htaado">
+            <div class="drop-down status-drop-down hide">
               <ul class="options status-options">
                 <li class="option status-option">
                   <span class="option-text">Delivered</span>
@@ -80,7 +80,7 @@
                 <i class="fa-solid fa-angle-down"></i>
               </div>
             </div>
-            <div class="drop-down distribution-drop-down htaado">
+            <div class="drop-down distribution-drop-down hide">
               <ul class="options distribution-options">
                 <li class="option distribution-option">
                   <span class="option-text">Patna</span>
@@ -113,13 +113,15 @@
         </div>
       </div>
 
-      <div class="content">
-        <div class="all-orders">
-          <input type="checkbox" id="select-all" name="deepanshug" />
+      <div class="all-orders">
+        <input type="checkbox" id="select-all" name="deepanshug" />
 
-          <label for="all"> All orders</label>
-        </div>
+        <label class="deepanshug" for="deepanshug">
+          All orders
+          <span class="selected-orders">(0 order selected)</span></label
+        >
       </div>
+      <div class="content"></div>
     </div>
 
     <script src="/script.js"></script>

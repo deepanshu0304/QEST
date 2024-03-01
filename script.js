@@ -1,5 +1,3 @@
-const mainContent = document.getElementsByClassName("content");
-
 const statusSelectBtn = document.querySelector(".status-bar");
 const statusOptions = document.querySelectorAll(".status-option");
 const statusBtnText = document.querySelector(".status-btn-text");
@@ -8,21 +6,13 @@ const distributionSelectBtn = document.querySelector(".distribution-bar");
 const distributionOptions = document.querySelectorAll(".distribution-option");
 const distributionBtnText = document.querySelector(".distribution-btn-text");
 const distributionDropdown = document.querySelector('.distribution-drop-down')
-const selectAllOrders = document.querySelector('#select-all')
-console.log(selectAllOrders);
-selectAllOrders.checked = true;
-console.log(selectAllOrders.checked);
-
-selectAllOrders.addEventListener('change', () => {
-    console.log('deepanshu');
-})
-
-
-const orderBtn = document.getElementsByClassName('orders');
+const selectAllOrders = document.getElementById('select-all')
+const mainContent = document.querySelector(".content");
+const orderBtn = document.querySelector('.orders');
 const searchBar = document.querySelector('.search');
+const noOfOrder = document.querySelector('.selected-orders')
 
 
-let filter = "";
 const allOrders = [
     {
         ref: 234,
@@ -68,123 +58,79 @@ const allOrders = [
         distribution: "Banglore",
         status: "In transit",
         price: 900.0,
+    },
+    {
+        ref: 134,
+        customer: "Deepanshu G",
+        products: "Orbea Orco M30",
+        date: "08 Aug 2020",
+        distribution: "Banglore",
+        status: "In transit",
+        price: 900.0,
     }
+
 ]
 
 
-function addElement(i, id, cus, pro, da, dis, sta, pri) {
-    const row = document.createElement('div');
-    row.classList.add('labels')
-    if (i & 1)
-        row.classList.add('dark');
+let searchFilter = "";
+let orderSelected = 0;
 
-    const ref = document.createElement('div');
-    ref.classList.add('ref');
-    const input = document.createElement('input');
-    input.type = 'checkbox'
-    input.name = 'vehicle1'
-    input.value = `$id`;
-    input.setAttribute("id", id);
-    const label = document.createElement('label');
-    label.for = "vehicle1"
-    label.innerHTML = id;
-    ref.appendChild(input);
-    ref.appendChild(label);
-    row.appendChild(ref);
-
-    const customer = document.createElement('div');
-    customer.classList.add('customer');
-    customer.innerHTML = cus
-    row.appendChild(customer);
-
-    const products = document.createElement('div');
-    products.classList.add('products');
-    products.innerHTML = pro
-    row.appendChild(products);
-
-    const date = document.createElement('div');
-    date.classList.add('date');
-    date.innerHTML = da
-    row.appendChild(date);
-
-    const distribution = document.createElement('div');
-    distribution.classList.add('customer');
-    distribution.innerHTML = dis
-    row.appendChild(distribution);
-
-    const statuss = document.createElement('div');
-    statuss.classList.add('status');
-    statuss.innerHTML = sta
-    row.appendChild(statuss);
-
-    const price = document.createElement('div');
-    price.classList.add('price');
-    price.innerHTML = pri
-    row.appendChild(price);
+searchBar.addEventListener("input", (e) => {
+    searchFilter = e.target.value
+    renderMainContent(allOrders);
+});
 
 
-    mainContent[0].appendChild(row);
-}
+statusSelectBtn.addEventListener("click", () => {
+    statusDropdown.classList.toggle("hide");
+    distributionDropdown.classList.add("hide");
+});
 
 
+statusOptions.forEach(option => {
+    option.addEventListener("click", () => {
+        const selectedOption = option.querySelector('.option-text').innerText;
+        statusBtnText.innerText = selectedOption;
+        statusDropdown.classList.add("hide");
+        renderMainContent(allOrders);
+    });
+});
 
-function renderMainContent(allOrders) {
+distributionSelectBtn.addEventListener("click", () => {
+    distributionDropdown.classList.toggle("hide");
+    statusDropdown.classList.add("hide");
+});
 
-    mainContent[0].innerHTML = `<div class="all-orders">
-          <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
+distributionOptions.forEach(option => {
+    option.addEventListener("click", () => {
+        const selectedOption = option.querySelector('.option-text').innerText;
+        distributionBtnText.innerText = selectedOption;
+        distributionDropdown.classList.add("hide");
+        renderMainContent(allOrders);
+    });
+});
 
-          <label for="vehicle1"> All orders</label>
-        </div>
-        <div class="labels dark">
-          <div class="ref">
-            <input type="checkbox" id="vehicle2" name="vehicle1" value="Bike" />
-
-            <label for="vehicle1"> Ref. ID</label>
-          </div>
-          <div class="customer">Customer</div>
-          <div class="products">Products</div>
-          <div class="date">Date</div>
-          <div class="distribution">Distribution</div>
-          <div class="status">Status</div>
-          <div class="price">Price (in Rs)</div>
-        </div>`
-    let orderId = 0;
-    // console.log(statusBtnText.innerHTML);
-    for (let i = 0; i < allOrders.length; i++) {
-
-
-        const customerName = allOrders[i].customer.toLowerCase();
-        const productName = allOrders[i].products.toLowerCase();
-        filter = filter.toLowerCase();
-        const status = allOrders[i].status.toLowerCase();
-        // console.log(status);
-        const distribution = allOrders[i].distribution.toLowerCase();
-        const distributionCheck = distributionBtnText.innerHTML.includes('Distribution') || distribution.includes(distributionBtnText.innerHTML.toLowerCase());
-        const statusCheck = statusBtnText.innerHTML.includes('Status') || status.includes((statusBtnText.innerHTML).toLowerCase());
-        if ((customerName.includes(filter) || productName.includes(filter)) && distributionCheck && statusCheck) {
-
-            addElement(orderId++, allOrders[i].ref, allOrders[i].customer, allOrders[i].products, allOrders[i].date, allOrders[i].distribution, allOrders[i].status, allOrders[i].price);
-        }
+window.addEventListener("click", (e) => {
+    if (!statusSelectBtn.contains(e.target)) {
+        statusDropdown.classList.add("hide");
     }
-}
 
-renderMainContent(allOrders);
-
-
-
-
+    if (!distributionSelectBtn.contains(e.target)) {
+        distributionDropdown.classList.add('hide');
+    }
+});
 
 
-orderBtn[0].addEventListener('click', () => {
-
+orderBtn.addEventListener('click', () => {
     const refinedData = [];
     const titleKeys = Object.keys(allOrders[0]);
     refinedData.push(titleKeys);
 
     allOrders.forEach(e => {
 
-        if (document.getElementById(e.ref) && document.getElementById(e.ref).checked)
+        if (document.getElementById(e.ref) && document.getElementById(e.ref).checked) {
             refinedData.push(Object.values(e));
+        }
     });
 
     let csvContent = '';
@@ -207,61 +153,100 @@ orderBtn[0].addEventListener('click', () => {
 });
 
 
-
-
-
-
-
-statusSelectBtn.addEventListener("click", () => {
-    statusDropdown.classList.toggle("htaado");
-    distributionDropdown.classList.add("htaado");
-})
-distributionSelectBtn.addEventListener("click", () => {
-    distributionDropdown.classList.toggle("htaado");
-    statusDropdown.classList.add("htaado");
-})
-
-statusOptions.forEach(option => {
-    option.addEventListener("click", () => {
-        const selectedOption = option.querySelector('.option-text').innerText;
-
-        statusBtnText.innerText = selectedOption;
-
-        statusDropdown.classList.add("htaado");
-        renderMainContent(allOrders);
-
-    });
-})
-distributionOptions.forEach(option => {
-    option.addEventListener("click", () => {
-        const selectedOption = option.querySelector('.option-text').innerText;
-
-        distributionBtnText.innerText = selectedOption;
-
-        distributionDropdown.classList.add("htaado");
-        renderMainContent(allOrders);
-
-    });
-})
-
-
-
-
-
-searchBar.addEventListener("input", (e) => {
-    console.log(e.target);
-    console.log(e.target.value);
-    filter = e.target.value
-    renderMainContent(allOrders);
-});
-
-
-
-window.addEventListener("click", (e) => {
-    if (!statusSelectBtn.contains(e.target))
-        statusDropdown.classList.add("htaado");
-       
-    if (!distributionSelectBtn.contains(e.target)) {
-        distributionDropdown.classList.add('htaado');
+selectAllOrders.addEventListener('change', () => {
+    let count = 0;
+    if (selectAllOrders.checked) {
+        for (let i = 0; i < allOrders.length; i++) {
+            const row = document.getElementById(`${allOrders[i].ref}`);
+            if (row) {
+                row.checked = true;
+                count++;
+            }
+        }
+        noOfOrder.innerHTML = `(${count} order selected)`;
+    }
+    else {
+        for (let i = 0; i < allOrders.length; i++) {
+            const row = document.getElementById(`${allOrders[i].ref}`);
+            if (row) {
+                row.checked = false;
+            }
+        }
+        noOfOrder.innerHTML = `(0 order selected)`;
     }
 });
+
+function renderMainContent(allOrders) {
+    noOfOrder.innerHTML = `(0 order selected)`;
+    selectAllOrders.checked = false;
+    let html = `
+        <div class="labels dark order-head">
+          <div class="ref">
+
+            <input type="checkbox" id="vehicle2" class="opacity" name="vehicle1" value="Bike" />
+
+            <label for="vehicle1"> Ref. ID</label>
+          </div>
+          <div class="customer">Customer</div>
+          <div class="products">Products</div>
+          <div class="date">Date</div>
+          <div class="distribution">Distribution</div>
+          <div class="status">Status</div>
+          <div class="price">Price (in Rs)</div>
+        </div>`
+    let orderId = 0;
+
+    for (let i = 0; i < allOrders.length; i++) {
+
+
+        searchFilter = searchFilter.toLowerCase();
+        const customerName = allOrders[i].customer.toLowerCase();
+        const productName = allOrders[i].products.toLowerCase();
+        const status = allOrders[i].status.toLowerCase();
+        const distribution = allOrders[i].distribution.toLowerCase();
+        const customerCheck = customerName.includes(searchFilter);
+        const productcheck = productName.includes(searchFilter);
+        const statusCheck = statusBtnText.innerHTML.includes('Status') || status.includes((statusBtnText.innerHTML).toLowerCase());
+        const distributionCheck = distributionBtnText.innerHTML.includes('Distribution') || distribution.includes(distributionBtnText.innerHTML.toLowerCase());
+
+        if ((customerCheck || productcheck) && distributionCheck && statusCheck) {
+
+            html += addElement(orderId++, allOrders[i]);
+        }
+    }
+
+    mainContent.innerHTML = html;
+    allOrders.forEach(e => {
+
+        const singleOrder = document.getElementById(e.ref);
+        if (singleOrder) {
+
+            singleOrder.addEventListener('change', () => {
+                if (singleOrder.checked) orderSelected++;
+                else orderSelected--;
+                noOfOrder.innerHTML = `(${orderSelected} order selected)`;
+            })
+        }
+    });
+}
+
+function addElement(i, { ref, customer, products, date, distribution, status, price }) {
+    return `
+        <div class="labels ${i & 1 ? 'dark' : ''}">
+          <div class="ref">
+            <input type="checkbox" id=${ref} name=${ref}/>
+
+            <label for=${ref}> ${ref}</label>
+          </div>
+          <div class="customer">${customer}</div>
+          <div class="products">${products}</div>
+          <div class="date">${date}</div>
+          <div class="distribution">${distribution}</div>
+          <div class="status">${status}</div>
+          <div class="price">${price}</div>
+        </div>`
+}
+
+renderMainContent(allOrders);
+
+
